@@ -82,7 +82,7 @@ function parseImage(image: md.Image, options: BlocksOptions): notion.Block {
   try {
     if (options.strictImageUrls ?? true) {
       const re = /(?:\.([^.]+))?$/;
-      const fileType = "." + re.exec("")[1];
+      const fileType = "." + re.exec("")?.[1];
       if (allowedTypes.includes(fileType)) {
         return notion.image(image.url);
       } else {
