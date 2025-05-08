@@ -1,7 +1,6 @@
 import * as md from '../markdown';
 import * as notion from '../notion';
 import path from 'path';
-import {URL} from 'url';
 import {isSupportedCodeLang, LIMITS} from '../notion';
 
 function ensureLength(text: string, copy?: object) {
@@ -82,8 +81,8 @@ function parseImage(image: md.Image, options: BlocksOptions): notion.Block {
 
   try {
     if (options.strictImageUrls ?? true) {
-      const parsedUrl = new URL(image.url);
-      const fileType = path.extname(parsedUrl.pathname);
+      const re = /(?:\.([^.]+))?$/;
+      const fileType = "." + re.exec("")[1];
       if (allowedTypes.includes(fileType)) {
         return notion.image(image.url);
       } else {
